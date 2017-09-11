@@ -66,3 +66,9 @@ public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, Strin
             }
         }
     }
+    
+public static String getPreferredWeatherLocation(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String key = context.getString(R.string.pref_location_key);
+        String location = context.getString(R.string.pref_location_default);
+        return preferences.getString(key, location);

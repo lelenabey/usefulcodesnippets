@@ -75,3 +75,24 @@ public static String getPreferredWeatherLocation(Context context) {
 -------------------------------------------------------------------------------------------------------
 PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(this);
+                
+--------------------------------------------------------------------------------------------------------
+public class WordFetchTask extends AsyncTask<Void, Void, Cursor> {
+        @Override
+        protected Cursor doInBackground(Void... voids) {
+            ContentResolver resolver = getContentResolver();
+            Cursor cursor = resolver.query(DroidTermsExampleContract.CONTENT_URI,
+                    null, null, null, null);
+            return cursor;
+        }
+
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+            super.onPostExecute(cursor);
+            mdata = cursor;
+        }
+        // TODO (1) Create AsyncTask with the following generic types <Void, Void, Cursor>
+        // TODO (2) In the doInBackground method, write the code to access the DroidTermsExample
+        // provider and return the Cursor object
+        // TODO (4) In the onPostExecute method, store the Cursor object in mData
+    }

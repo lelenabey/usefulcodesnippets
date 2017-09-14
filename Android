@@ -96,3 +96,23 @@ public class WordFetchTask extends AsyncTask<Void, Void, Cursor> {
         // provider and return the Cursor object
         // TODO (4) In the onPostExecute method, store the Cursor object in mData
     }
+
+--------------------------------------------------------------------------------------------------------------------
+ublic Cursor loadInBackground() {
+                // Will implement to load data
+
+                // TODO (5) Query and load all task data in the background; sort by priority
+                // [Hint] use a try/catch block to catch any errors in loading data
+                try{
+                    return getContentResolver().query(CONTENT_URI,
+                            null,
+                            null,
+                            null,
+                            COLUMN_PRIORITY);
+                }catch (Exception e){
+                    Log.e(TAG, "Fail;ed to get data");
+                    e.printStackTrace();
+                    return null;
+                }
+                
+            }

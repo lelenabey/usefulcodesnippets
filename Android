@@ -98,7 +98,7 @@ public class WordFetchTask extends AsyncTask<Void, Void, Cursor> {
     }
 
 --------------------------------------------------------------------------------------------------------------------
-ublic Cursor loadInBackground() {
+public Cursor loadInBackground() {
                 // Will implement to load data
 
                 // TODO (5) Query and load all task data in the background; sort by priority
@@ -116,3 +116,27 @@ ublic Cursor loadInBackground() {
                 }
                 
             }
+ ------------------------------------------------------------------------------------------------------------------
+ new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            // Called when a user swipes left or right on a ViewHolder
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                // Here is where you'll implement swipe to delete
+
+                // TODO (1) Construct the URI for the item to delete
+                int id = (int) viewHolder.itemView.getTag();
+                //[Hint] Use getTag (from the adapter code) to get the id of the swiped item
+                String sId = Integer.toString(id);
+                Uri uri = CONTENT_URI;
+                uri.buildUpon().appendPath(sId).build();
+                // TODO (2) Delete a single row of data using a ContentResolver
+                getContentResolver().delete(uri, null, null);
+                // TODO (3) Restart the loader to re-query for all tasks after a deletion
+                getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, MainActivity.this);
+            }
+        }).attachToRecyclerView(mRecyclerView);
